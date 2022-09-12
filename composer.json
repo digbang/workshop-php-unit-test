@@ -1,5 +1,5 @@
 {
-    "name": "mfilipoff/test-workshop",
+    "name": "digbang/workshop-php-unit-test",
     "autoload": {
         "psr-4": {
             "App\\": "src/"
