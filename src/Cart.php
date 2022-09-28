@@ -3,7 +3,6 @@
 namespace App;
 
 use App\Exceptions\NotInCartItemException;
-use App\Item;
 use Illuminate\Support\Collection;
 
 class Cart

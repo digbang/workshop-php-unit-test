@@ -50,7 +50,7 @@ Recordemos que PHPUnit necesita que el test cominece con `test_` o en su defecto
 ## 5. Ejercicio
 Desarrollaremos un carrito de compra y simularemos el flujo desde que tomo el carrito de compras hasta que paso por caja y obtengo el total a pagar.
 
-Con que clases bamos a trabajar?
+Con que clases vamos a trabajar?
 - Cart
 - Catalog
 - Checkout
