@@ -8,6 +8,7 @@ use App\Cart;
 use App\Catalog;
 use App\Checkout;
 use App\Exceptions\EmptyCartDuringCheckoutException;
+use App\Exceptions\InvalidQuantityException;
 use App\Exceptions\NotCatalogedItemException;
 use App\Exceptions\NotInCartItemException;
 use Money\Money;
@@ -71,11 +72,27 @@ class XTest extends TestCase
         $this->assertEmpty($cart->items());
 
         $this->assertFalse($cart->contains('Non in cart item'));
-        
+
         $cart->quantity('Non in cart item');
     }
 
     public function test_006(): void
+    {
+        $this->expectException(InvalidQuantityException::class);
+
+        $cart = new Cart();
+        $cart->add('Item 1', -1);
+    }
+
+    public function test_007(): void
+    {
+        $this->expectException(InvalidQuantityException::class);
+
+        $cart = new Cart();
+        $cart->add('Item 1', 0);
+    }
+
+    public function test_008(): void
     {
         $catalog = new Catalog();
         $catalog->set('Item 1', Money::ARS(10));
@@ -83,7 +100,7 @@ class XTest extends TestCase
         $this->assertEquals(Money::ARS(10), $catalog->price('Item 1'));
     }
 
-    public function test_007(): void
+    public function test_009(): void
     {
         $catalog = new Catalog();
         $catalog->set('Item 1', Money::ARS(10));
@@ -92,7 +109,7 @@ class XTest extends TestCase
         $this->assertEquals(Money::ARS(50), $catalog->price('Item 1'));
     }
 
-    public function test_008(): void
+    public function test_010(): void
     {
         $catalog = new Catalog();
         $catalog->set('Item 1', Money::ARS(10));
@@ -102,7 +119,7 @@ class XTest extends TestCase
         $this->assertEquals(Money::ARS(50), $catalog->price('Item 2'));
     }
 
-    public function test_009(): void
+    public function test_011(): void
     {
         $this->expectException(NotCatalogedItemException::class);
 
@@ -111,7 +128,7 @@ class XTest extends TestCase
         $catalog->price('Not cataloged item');
     }
 
-    public function test_010(): void
+    public function test_012(): void
     {
         $this->expectException(EmptyCartDuringCheckoutException::class);
 
@@ -123,7 +140,7 @@ class XTest extends TestCase
         $checkout($cart, $catalog);
     }
 
-    public function test_011(): void
+    public function test_013(): void
     {
         $cart = new Cart();
         $cart->add('Item 1', 1);
@@ -137,7 +154,7 @@ class XTest extends TestCase
         $this->assertEquals(Money::ARS(10), $total);
     }
 
-    public function test_012(): void
+    public function test_014(): void
     {
         $cart = new Cart();
         $cart->add('Item 1', 1);
@@ -152,7 +169,7 @@ class XTest extends TestCase
         $this->assertEquals(Money::ARS(20), $total);
     }
 
-    public function test_013(): void
+    public function test_015(): void
     {
         $cart = new Cart();
         $cart->add('Item 1', 1);
@@ -168,7 +185,7 @@ class XTest extends TestCase
         $this->assertEquals(Money::ARS(60), $total);
     }
 
-    public function test_014(): void
+    public function test_016(): void
     {
         $this->expectException(NotCatalogedItemException::class);
 

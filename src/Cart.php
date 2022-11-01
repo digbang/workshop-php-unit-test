@@ -2,8 +2,8 @@
 
 namespace App;
 
+use App\Exceptions\InvalidQuantityException;
 use App\Exceptions\NotInCartItemException;
-use App\Item;
 use Illuminate\Support\Collection;
 
 class Cart
@@ -17,6 +17,8 @@ class Cart
 
     public function add(string $name, int $quantity): void
     {
+        $this->assertInvalidQuantity($quantity);
+
         $currentQuantity = (int) $this->items->get($name);
         $newQuantity = $currentQuantity + $quantity;
 
@@ -40,5 +42,12 @@ class Cart
         }
 
         throw new NotInCartItemException();
+    }
+
+    private function assertInvalidQuantity(int $quantity): void
+    {
+        if ($quantity < 1) {
+            throw new InvalidQuantityException();
+        }
     }
 }
